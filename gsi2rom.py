@@ -168,5 +168,5 @@ file_name = str(input("Enter zip name for produced rom : "))
 os.system("mv rom_base/rom.zip " + file_name + ".zip")
 
 print("Cleaning up...")
-#os.system("rm -rf temp")
-#os.system("rm -rf rom_base")
+os.system("rm -rf temp")
+os.system("rm -rf rom_base")
