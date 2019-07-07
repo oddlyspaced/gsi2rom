@@ -103,6 +103,7 @@ def generate_updater():
         line = line.replace("&&porter&&", Config.porter)
         line = line.replace("&&android_version&&", Config.android_version)
         line = line.replace("&&port&&", Config.port)
+        line = line.replace("&&date&&", Config.date)
         line = line.replace("&&security&&", Config.security)
         writer.write(line)
     reader.close()
