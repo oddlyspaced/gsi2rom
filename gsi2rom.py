@@ -41,7 +41,8 @@ def make_temp_directory():
 
 def make_sparse_img(path, type):
     print("Making sparse image for " + type)
-    op = subprocess.check_output("img2simg " + path + " temp/" + type + "_sparse.img", shell=True)
+    bin_location = str(os.getcwd() + "img2simg/img2simg"
+    op = subprocess.check_output(bin_location + path + " temp/" + type + "_sparse.img", shell=True)
     if len(op) > 1 :
         print("Error occured in generating sparse image for " + type)
         exit()
@@ -50,7 +51,8 @@ def make_sparse_img(path, type):
 def make_dat_files(type):
     print("Generating dat files for " + type)
     # img2sdat -o temp/vendor_patched -v 4 temp/vendor_sparse.img
-    op = subprocess.check_output("img2sdat -o " + "temp/" + type + "_dat " + "-v 4 " + "temp/" + type + "_sparse.img", shell=True)
+    bin_location = str(os.getcwd() + "img2sdat/img2sdat.py"
+    op = subprocess.check_output(bin_location + " -o " + "temp/" + type + "_dat " + "-v 4 " + "temp/" + type + "_sparse.img", shell=True)
     
     op = str(op).lower()
     if "error" in op:
