@@ -26,8 +26,48 @@ compress_dat() {
 	echo "Done."
 }
 
-argument_true=$(echo "$(echo $1 | cut -d'.' -f 1)")
-	
-convert_sparse "$(echo $argument_true).img"
-convert_dat "$(echo $argument_true)_converted.img"
-compress_dat "$argument_true"
+create_zip() {
+	#create copy of base so that it won't conflict with original folder
+	echo "Copy base folder to temp..."
+	cp -r base temp
+	echo "Done."
+	sleep 1
+	echo "Adding files to base..."
+	for arg in "$@"
+	do
+		mv $arg/"$arg.new.dat.br" temp/
+		mv $arg/"$arg.patch.dat" temp/
+		mv $arg/"$arg.transfer.list" temp/
+	done
+	echo "Done"
+	sleep 1
+	echo "Creating zip..."
+	echo "Enter zip name: "
+	read name
+	zip -r "$name.zip" temp/
+	echo "All done!"
+	echo "$name.zip has been created."
+}
+
+cleanup() {
+	echo "Cleaning up..."
+	for arg in "$@"
+	do
+		rm -rf $arg
+		rm -rf "($arg)_converted.img"
+	done
+	rm -rf temp/
+	echo "Done."
+}
+
+argument_system=$(echo "$(echo $1 | cut -d'.' -f 1)")
+argument_vendor=$(echo "$(echo $2 | cut -d'.' -f 1)")
+
+convert_sparse "$(echo $argument_system).img"
+convert_sparse "$(echo $argument_vendor).img"
+convert_dat "$(echo $argument_system)_converted.img"
+convert_dat "$(echo $argument_vendor)_converted.img"
+compress_dat "$argument_system"
+compress_dat "$argument_vendor"
+create_zip $argument_system $argument_vendor
+cleanup $argument_system $argument_vendor
