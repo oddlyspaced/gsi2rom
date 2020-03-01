@@ -13,4 +13,15 @@ convert_sparse() {
 	fi
 }
 
-convert_sparse $1
+convert_dat() {
+	argument_true=$(echo "$(echo $(echo "$(echo $1 | cut -d'.' -f 1)") | cut -d'_' -f 1)")
+	echo "Generating dat files for $1..."
+	output=$(img2sdat -o $argument_true -v 4 -p $argument_true $1)
+	echo "Done."
+}
+
+
+argument_half=$(echo "$(echo $1 | cut -d'.' -f 1)")
+	
+convert_sparse "$(echo $argument_half).img"
+convert_dat "$(echo $argument_half)_converted.img"
