@@ -20,8 +20,14 @@ convert_dat() {
 	echo "Done."
 }
 
+compress_dat() {
+	echo "Compressing $1.new.dat..."
+	brotli -7 "$1/$1.new.dat" -o "$1/$1.new.dat.br"
+	echo "Done."
+}
 
-argument_half=$(echo "$(echo $1 | cut -d'.' -f 1)")
+argument_true=$(echo "$(echo $1 | cut -d'.' -f 1)")
 	
-convert_sparse "$(echo $argument_half).img"
-convert_dat "$(echo $argument_half)_converted.img"
+convert_sparse "$(echo $argument_true).img"
+convert_dat "$(echo $argument_true)_converted.img"
+compress_dat "$argument_true"
