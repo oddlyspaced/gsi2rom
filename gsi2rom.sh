@@ -46,6 +46,7 @@ create_zip() {
 	read name
 	cd temp
 	zip -r "$name.zip" *
+	mv "$name.zip" ../
 	cd ..
 	echo "All done!"
 	echo "$name.zip has been created."
@@ -56,7 +57,7 @@ cleanup() {
 	for arg in "$@"
 	do
 		rm -rf $arg
-		rm -rf "($arg)_converted.img"
+		rm -rf "($arg)"_converted.img
 	done
 	rm -rf temp/
 	echo "Done."
