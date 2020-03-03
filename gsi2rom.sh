@@ -44,7 +44,9 @@ create_zip() {
 	echo "Creating zip..."
 	echo "Enter zip name: "
 	read name
-	zip -r "$name.zip" temp/
+	cd temp
+	zip -r "$name.zip" *
+	cd ..
 	echo "All done!"
 	echo "$name.zip has been created."
 }
